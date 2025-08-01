@@ -12,24 +12,26 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade900,
+        color: colorScheme.surfaceVariant, // Arkaplan koyu ton
         borderRadius: BorderRadius.circular(2.h),
-        border: Border.all(color: Colors.white24),
+        border: Border.all(color: colorScheme.onSurface.withOpacity(0.24)), // Hafif şeffaf border
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.4.h),
         child: TextField(
           obscureText: isObscure,
           onChanged: onChanged,
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: colorScheme.onSurface), // Yazı rengi
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: const TextStyle(color: Colors.white60),
+            hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)), // Hint yazısı
             border: InputBorder.none,
-            icon: Icon(icon, color: Colors.white),
-            suffixIcon: suffixIcon, // Sadece dışarıdan gelirse göster, yoksa hiç gösterme
+            icon: Icon(icon, color: colorScheme.onSurface), // Icon rengi
+            suffixIcon: suffixIcon,
           ),
         ),
       ),

@@ -49,6 +49,7 @@ class CoreDio with DioMixin implements Dio, ICoreDioNullSafety {
     required BaseModel<T> parseModel,
     dynamic data,
     Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
     void Function(int, int)? onReceiveProgress,
   }) async {
     try {
@@ -56,7 +57,7 @@ class CoreDio with DioMixin implements Dio, ICoreDioNullSafety {
         path,
         data: data,
         queryParameters: queryParameters,
-        options: Options(method: type.rawValue),
+        options: Options(method: type.rawValue, headers: headers),
       );
 
       switch (response.statusCode) {

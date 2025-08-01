@@ -4,11 +4,9 @@ import '../../constants/enums/preferences_types.dart';
 
 class LocaleManager {
   LocaleManager._init() {
-    SharedPreferences.getInstance().then(
-      (value) {
-        _preferences = value;
-      },
-    );
+    SharedPreferences.getInstance().then((value) {
+      _preferences = value;
+    });
   }
   static final LocaleManager _instance = LocaleManager._init();
 
@@ -43,7 +41,7 @@ class LocaleManager {
 
   String getStringValue(PreferencesTypes key) => _preferences?.getString(key.toString()) ?? '';
 
-  bool getBoolValue(PreferencesTypes key) => _preferences!.getBool(key.toString()) ?? false;
+  bool? getBoolValue(PreferencesTypes key) => _preferences!.getBool(key.toString());
 
   int setIntValue(PreferencesTypes key) => _preferences!.getInt(key.toString()) ?? 0;
 }

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'core/constants/app/app_constants.dart';
@@ -25,7 +26,10 @@ void main() async {
       supportedLocales: LanguageManager.instance?.supportedLocales ?? [],
       path: ApplicationConstants.LANG_ASSET_PATH,
       startLocale: langCode.isNotEmpty ? Locale(langCode) : LanguageManager.instance?.trLocale,
-      child: MyApp(isLoggedIn: token.isNotEmpty),
+      child: ChangeNotifierProvider(
+        create: (_) => ThemeService(), // TEMAYI PROVIDER İLE VERDİK
+        child: MyApp(isLoggedIn: token.isNotEmpty),
+      ),
     ),
   );
 }
@@ -50,7 +54,7 @@ class MyApp extends StatelessWidget {
           routes: AppRoutes.routes,
           theme: ThemeManager.createTheme(AppThemeLight()),
           darkTheme: ThemeManager.createTheme(AppThemeDark()),
-          themeMode: ThemeService().themeMode,
+          themeMode: Provider.of<ThemeService>(context).themeMode,
         );
       },
     );

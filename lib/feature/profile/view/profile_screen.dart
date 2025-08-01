@@ -6,6 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../../core/constants/enums/preferences_types.dart';
+import '../../../core/init/cache/locale_manager.dart';
+import '../../../core/init/language/language_manager.dart';
 import '../../home/model/movie.dart';
 import '../../login/model/user.dart';
 import '../bloc/profile_bloc.dart';
@@ -69,7 +72,41 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildTopBar(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [_buildBackIcon(), _buildTitle(), _buildLimitedOfferButton(context)]);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _buildBackIcon(),
+        _buildTitle(),
+        Row(
+          children: [
+            _buildLimitedOfferButton(context),
+            SizedBox(width: 2.w),
+            _buildLanguageButton(context),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLanguageButton(BuildContext context) {
+    return PopupMenuButton<Locale>(
+      icon: const Icon(Icons.language, color: Colors.white),
+      color: Colors.black,
+      onSelected: (Locale locale) {
+        context.setLocale(locale);
+        LocaleManager.instance.setStringValue(PreferencesTypes.language, locale.languageCode);
+      },
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: LanguageManager.instance?.trLocale,
+          child: Text('Türkçe', style: TextStyle(color: Colors.white)),
+        ),
+        PopupMenuItem(
+          value: LanguageManager.instance?.enLocale,
+          child: Text('English', style: TextStyle(color: Colors.white)),
+        ),
+      ],
+    );
   }
 
   Widget _buildBackIcon() {

@@ -13,16 +13,18 @@ import 'product/app/application_item.dart';
 import 'product/route/route.dart';
 import 'product/theme/app_theme.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DependencyInjection.init();
+
   final token = LocaleManager.instance.getStringValue(PreferencesTypes.token);
+  final langCode = LocaleManager.instance.getStringValue(PreferencesTypes.language);
 
   runApp(
     EasyLocalization(
       supportedLocales: LanguageManager.instance?.supportedLocales ?? [],
       path: ApplicationConstants.LANG_ASSET_PATH,
-      startLocale: LanguageManager.instance?.trLocale,
+      startLocale: langCode.isNotEmpty ? Locale(langCode) : LanguageManager.instance?.trLocale,
       child: MyApp(isLoggedIn: token.isNotEmpty),
     ),
   );

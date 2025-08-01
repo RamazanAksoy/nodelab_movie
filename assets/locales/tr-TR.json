@@ -1,0 +1,58 @@
+{
+  "login": {
+    "welcome": "Merhabalar",
+    "description": "Tempus varius a vitae interdum id tortor elementum tristique eleifend at.",
+    "email": "E-Posta",
+    "password": "Şifre",
+    "forgot_password": "Şifremi unuttum",
+    "login_button": "Giriş Yap",
+    "no_account": "Bir hesabın yok mu? ",
+    "register": "Kayıt Ol!"
+  },
+
+  "register": {
+    "welcome": "Hoşgeldiniz",
+    "description": "Tempus varius a vitae interdum id tortor elementum tristique eleifend at.",
+    "name": "Ad Soyad",
+    "email": "E-Posta",
+    "password": "Şifre",
+    "confirm_password": "Şifre Tekrar",
+    "register_button": "Şimdi Kaydol",
+    "have_account": "Zaten bir hesabın var mı?",
+    "login": "Giriş Yap!",
+    "terms_agreement": "Kullanıcı sözleşmesini okudum ve kabul ediyorum.",
+    
+    "success_title": "✅ Kayıt Başarılı",
+    "success_content": "Kayıt oluşturuldu, şimdi giriş yapabilirsiniz.",
+    "success_button": "Giriş Yap"
+  }
+,
+
+  "profile": {
+    "title": "Profil Detayı",
+    "limited_offer": "Sınırlı Teklif",
+    "add_photo": "Fotoğraf Ekle",
+    "loading_error": "Yüklenemedi",
+    "favorites_title": "Beğendiğim Filmler",
+    "id_label": "ID",
+      "add_photo_detail": "Fotoğraflarınızı Yükleyin",
+  "continue": "Devam Et"
+  },
+
+ 
+  "jeton": {
+    "limited_offer": "Sınırlı Teklif",
+    "limited_description": "Yalnızca bu hafta geçerli özel jeton fırsatını kaçırma!",
+    "bonus_title": "Jetonlarla birlikte gelen avantajlar",
+    "bonus1": "Reklamsız",
+    "bonus2": "Sınırsız erişim",
+    "bonus3": "VIP rozet",
+    "bonus4": "Özel içerik",
+    "unlock_text": "Tüm avantajların kilidini açmak için bir paket seçin",
+    "see_all": "Tüm Paketleri Gör",
+    "per_week": "haftalık"
+  }
+
+
+
+}

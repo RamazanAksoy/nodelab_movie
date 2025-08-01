@@ -1,0 +1,57 @@
+{
+  "login": {
+    "welcome": "Hello",
+    "description": "Tempus varius a vitae interdum id tortor elementum tristique eleifend at.",
+    "email": "Email",
+    "password": "Password",
+    "forgot_password": "Forgot Password",
+    "login_button": "Login",
+    "no_account": "Don't have an account?",
+    "register": "Sign Up!"
+  },
+  "register": {
+    "welcome": "Welcome",
+    "description": "Tempus varius a vitae interdum id tortor elementum tristique eleifend at.",
+    "name": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "register_button": "Register Now",
+    "have_account": "Already have an account?",
+    "login": "Login!",
+    "terms_agreement": "I have read and agree to the user agreement.",
+       "success_title": "✅ Registration Successful",
+    "success_content": "Your account has been created, you can now login.",
+    "success_button": "Login"
+  },
+  "profile": {
+  "title": "Profile Detail",
+  "limited_offer": "Limited Offer",
+  "add_photo": "Add Photo",
+  "id_label": "ID",
+  "favorites_title": "My Favorite Movies",
+  "loading_error": "Failed to load",
+       "add_photo_detail": "Fotoğraflarınızı Yükleyin",
+  "continue": "Devam Et"
+},
+
+
+
+  "jeton": {
+    "limited_offer": "Limited Offer",
+    "limited_description": "Don’t miss this week’s special token opportunity!",
+    "bonus_title": "Benefits included with tokens",
+    "bonus1": "No Ads",
+    "bonus2": "Unlimited Access",
+    "bonus3": "VIP Badge",
+    "bonus4": "Exclusive Content",
+    "unlock_text": "Choose a package to unlock all benefits",
+    "see_all": "See All Packages",
+    "per_week": "per week"
+  }
+
+
+
+
+
+}

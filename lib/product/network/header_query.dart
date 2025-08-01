@@ -1,11 +1,8 @@
-enum HeaderQuery { userid, token }
+enum HeaderQuery { token }
 
 extension HeaderQueryExtension on HeaderQuery {
-  MapEntry<String, dynamic> rawValue({String? token, int? userid}) {
+  MapEntry<String, dynamic> rawValue({String? token}) {
     switch (this) {
-      case HeaderQuery.userid:
-        return MapEntry('userid', '$userid');
-
       case HeaderQuery.token:
         return MapEntry('Authorization', '$token');
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../feature/home/view/home_screen.dart';
 import '../../feature/profile/bloc/profile_bloc.dart';
@@ -33,9 +34,9 @@ class _MainScreenState extends State<MainScreen> {
         decoration: BoxDecoration(color: Colors.black12, borderRadius: BorderRadius.circular(24)),
         child: Row(
           children: [
-            _navItem(icon: Icons.home, label: "Anasayfa", index: 0),
+            _navItem(icon: Icons.home, label: "main.home".tr(), index: 0),
             const SizedBox(width: 30),
-            _navItem(icon: Icons.person, label: "Profil", index: 1),
+            _navItem(icon: Icons.person, label: "main.profile".tr(), index: 1),
           ],
         ),
       ),
@@ -49,11 +50,10 @@ class _MainScreenState extends State<MainScreen> {
         onTap: () => setState(() => _selectedIndex = index),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
-
           decoration: BoxDecoration(
             border: Border.all(color: isSelected ? Colors.white : Colors.grey.withOpacity(0.3), width: 1),
             color: Colors.grey.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(100), // oval köşeler
+            borderRadius: BorderRadius.circular(100),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

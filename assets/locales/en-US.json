@@ -31,8 +31,8 @@
   "id_label": "ID",
   "favorites_title": "My Favorite Movies",
   "loading_error": "Failed to load",
-       "add_photo_detail": "Fotoğraflarınızı Yükleyin",
-  "continue": "Devam Et"
+       "add_photo_detail": "Upload Your Photos",
+  "continue": "Continue"
 },
 
 
@@ -41,15 +41,19 @@
     "limited_offer": "Limited Offer",
     "limited_description": "Don’t miss this week’s special token opportunity!",
     "bonus_title": "Benefits included with tokens",
-    "bonus1": "No Ads",
-    "bonus2": "Unlimited Access",
-    "bonus3": "VIP Badge",
-    "bonus4": "Exclusive Content",
+    "bonus1": "No\n Ads",
+    "bonus2": "Unlimited\n Access",
+    "bonus3": "VIP\n Badge",
+    "bonus4": "Exclusive\n Content",
     "unlock_text": "Choose a package to unlock all benefits",
     "see_all": "See All Packages",
     "per_week": "per week"
   }
-
+,
+"main": {
+  "home": "Home",
+  "profile": "Profile"
+}
 
 
 

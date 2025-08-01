@@ -1,5 +1,3 @@
-// lib/feature/jeton/view/jeton_teklif_sheet.dart
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -11,27 +9,27 @@ class JetonTeklifSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.background,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          _buildGlow(),
+          _buildGlow(context),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildHeaderText(),
+              _buildHeaderText(context),
               const SizedBox(height: 20),
-              _buildBonusSection(),
+              _buildBonusSection(context),
               const SizedBox(height: 20),
-              _buildUnlockText(),
+              _buildUnlockText(context),
               const SizedBox(height: 20),
               _buildJetonCards(),
               const SizedBox(height: 24),
-              _buildSeeAllButton(),
+              _buildSeeAllButton(context),
               const SizedBox(height: 20),
             ],
           ),
@@ -40,7 +38,7 @@ class JetonTeklifSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildGlow() {
+  Widget _buildGlow(BuildContext context) {
     return Positioned(
       top: 10,
       left: 0,
@@ -49,38 +47,38 @@ class JetonTeklifSheet extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.transparent,
-          boxShadow: [BoxShadow(color: const Color(0xFFE50914).withOpacity(0.2), spreadRadius: 30, blurRadius: 100, offset: const Offset(0, 0))],
+          boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.primary.withOpacity(0.2), spreadRadius: 30, blurRadius: 100)],
         ),
       ),
     );
   }
 
-  Widget _buildHeaderText() {
+  Widget _buildHeaderText(BuildContext context) {
     return Column(
       children: [
         Text(
           'jeton.limited_offer'.tr(),
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onPrimary),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
           'jeton.limited_description'.tr(),
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 14, color: Colors.white70),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7)),
         ),
       ],
     );
   }
 
-  Widget _buildBonusSection() {
+  Widget _buildBonusSection(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.onBackground.withOpacity(0.05), borderRadius: BorderRadius.circular(20)),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
       child: Column(
         children: [
           Text(
             'jeton.bonus_title'.tr(),
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.white),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onPrimary),
           ),
           const SizedBox(height: 20),
           Row(
@@ -97,8 +95,8 @@ class JetonTeklifSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildUnlockText() {
-    return Text('jeton.unlock_text'.tr(), style: TextStyle(fontSize: 14, color: Colors.white));
+  Widget _buildUnlockText(BuildContext context) {
+    return Text('jeton.unlock_text'.tr(), style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary));
   }
 
   Widget _buildJetonCards() {
@@ -133,17 +131,17 @@ class JetonTeklifSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildSeeAllButton() {
+  Widget _buildSeeAllButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFFE50914),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         minimumSize: const Size.fromHeight(50),
       ),
       onPressed: () {},
       child: Text(
         'jeton.see_all'.tr(),
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -170,7 +168,7 @@ class BonusWidget extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           title,
-          style: const TextStyle(color: Colors.white, fontSize: 14),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
           textAlign: TextAlign.center,
         ),
       ],
@@ -219,34 +217,42 @@ class JetonCard extends StatelessWidget {
                     children: [
                       Text(
                         eski,
-                        style: const TextStyle(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           decoration: TextDecoration.lineThrough,
-                          color: Colors.white70,
-                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
                       ),
                       Text(
                         yeni,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onPrimary),
                         textAlign: TextAlign.center,
                       ),
-                      const Text(
+                      Text(
                         'Jeton',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onPrimary),
                         textAlign: TextAlign.center,
                       ),
                     ],
                   ),
-                  const Divider(color: Colors.white30),
+                  Divider(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3)),
                   Column(
                     children: [
                       Text(
                         fiyat,
-                        style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w900),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
                       ),
-                      Text('jeton.per_week'.tr(), style: TextStyle(color: Colors.white, fontSize: 10)),
+                      Text(
+                        'jeton.per_week'.tr(),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onPrimary, fontSize: 10),
+                      ),
                     ],
                   ),
                 ],
@@ -260,7 +266,10 @@ class JetonCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(image: AssetImage(titleImageUrl), fit: BoxFit.cover),
                 ),
-                child: Text(bonus, style: const TextStyle(fontSize: 15, color: Colors.white)),
+                child: Text(
+                  bonus,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 15, color: Theme.of(context).colorScheme.onPrimary),
+                ),
               ),
             ),
           ],

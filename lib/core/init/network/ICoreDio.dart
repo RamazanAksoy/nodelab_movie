@@ -10,5 +10,6 @@ abstract class ICoreDioNullSafety {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     void Function(int, int)? onReceiveProgress,
+    Map<String, dynamic>? headers,
   });
 }

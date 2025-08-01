@@ -8,18 +8,20 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return SizedBox(
       width: double.infinity,
       height: 7.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFFE50914),
+          backgroundColor: colorScheme.primary,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.h)),
         ),
         onPressed: onPressed,
         child: Text(
           title ?? "",
-          style: TextStyle(fontSize: 17.sp, color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 17.sp, color: colorScheme.onPrimary, fontWeight: FontWeight.bold),
         ),
       ),
     );

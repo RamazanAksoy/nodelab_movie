@@ -8,7 +8,7 @@ class ThemeService extends ChangeNotifier {
   late ThemeMode _themeMode;
 
   ThemeService() {
-    final isDark = localService?.getBoolValue(PreferencesTypes.theme) ?? false;
+    final isDark = localService?.getBoolValue(PreferencesTypes.theme) ?? true;
     _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
   }
 

@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../../core/base/model/IResponseModel.dart';
 import '../../../core/base/service/base_service.dart';
 import '../../../core/constants/enums/http_request_enum.dart';
@@ -19,8 +21,14 @@ class ProfileService with BaseService {
     return response;
   }
 
-  Future<IResponseModel<UserResponse?>?> uploadPhoto(String filePath) async {
-    final response = await networkManager?.send<UserResponse, UserResponse>('/user/upload_photo', parseModel: UserResponse(), type: HttpTypes.POST);
+  Future<IResponseModel<UserResponse?>?> uploadPhoto(FormData formData) async {
+    final response = await networkManager?.send<UserResponse, UserResponse>(
+      '/user/upload_photo',
+      parseModel: UserResponse(),
+      data: formData,
+      type: HttpTypes.POST,
+      headers: {'Content-Type': 'multipart/form-data'},
+    );
     return response;
   }
 }

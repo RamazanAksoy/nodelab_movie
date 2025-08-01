@@ -1,5 +1,6 @@
-import '/product/theme/color/i_color_theme.dart';
+// light_color_theme.dart
 import 'package:flutter/material.dart';
+import 'i_color_theme.dart';
 
 class LightColor implements IColorTheme {
   @override
@@ -15,8 +16,16 @@ class LightColor implements IColorTheme {
   AppColors color = AppColors();
 
   LightColor() {
-    colorScheme = ThemeData.light().colorScheme.copyWith(primary: color.red);
-    brightness = ThemeData.light().brightness;
-    background = ThemeData.light().scaffoldBackgroundColor;
+    colorScheme = ColorScheme.fromSeed(
+      seedColor: const Color(0xFFE50914),
+      brightness: Brightness.light,
+      primary: const Color.fromARGB(154, 255, 26, 37),
+      onPrimary: const Color.fromARGB(255, 0, 0, 0),
+      background: const Color(0xFFF8F8FB),
+      onBackground: Colors.black87,
+      onSecondary: const Color.fromARGB(247, 58, 57, 57),
+    );
+    brightness = Brightness.light;
+    background = colorScheme?.background;
   }
 }

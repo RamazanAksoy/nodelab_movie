@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nodelab_movie/core/extension/context_extension.dart';
 
 class PhotoUploadScreen extends StatefulWidget {
   const PhotoUploadScreen({super.key});
@@ -33,7 +34,7 @@ class _PhotoUploadScreenState extends State<PhotoUploadScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: context.theme.colorScheme.background,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -58,12 +59,12 @@ class _PhotoUploadScreenState extends State<PhotoUploadScreen> {
       children: [
         GestureDetector(
           onTap: () => Navigator.pop(context),
-          child: const Icon(Icons.arrow_back, color: Colors.white),
+          child: Icon(Icons.arrow_back, color: context.theme.colorScheme.onBackground),
         ),
         const SizedBox(width: 16),
         Text(
           'profile.title'.tr(),
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: context.theme.colorScheme.onBackground, fontWeight: FontWeight.bold, fontSize: 16),
         ),
       ],
     );
@@ -74,12 +75,12 @@ class _PhotoUploadScreenState extends State<PhotoUploadScreen> {
       children: [
         Text(
           'profile.add_photo_detail'.tr(),
-          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(color: context.theme.colorScheme.onBackground, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
         Text(
           'Resources out incentivize\nrelaxation floor loss cc.',
-          style: TextStyle(color: Colors.white70),
+          style: TextStyle(color: context.theme.colorScheme.onBackground.withOpacity(0.7)),
           textAlign: TextAlign.center,
         ),
       ],
@@ -97,7 +98,9 @@ class _PhotoUploadScreenState extends State<PhotoUploadScreen> {
           borderRadius: BorderRadius.circular(24),
           image: selectedImage != null ? DecorationImage(image: FileImage(selectedImage!), fit: BoxFit.cover) : null,
         ),
-        child: selectedImage == null ? const Center(child: Icon(Icons.add, color: Colors.white54, size: 32)) : null,
+        child: selectedImage == null
+            ? Center(child: Icon(Icons.add, color: context.theme.colorScheme.onBackground.withOpacity(0.5), size: 32))
+            : null,
       ),
     );
   }
@@ -108,11 +111,14 @@ class _PhotoUploadScreenState extends State<PhotoUploadScreen> {
       child: ElevatedButton(
         onPressed: _onContinue,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFE50914),
+          backgroundColor: context.theme.colorScheme.primary,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           padding: const EdgeInsets.symmetric(vertical: 14),
         ),
-        child: Text('profile.continue'.tr(), style: TextStyle(color: Colors.white, fontSize: 16)),
+        child: Text(
+          'profile.continue'.tr(),
+          style: TextStyle(color: context.theme.colorScheme.onBackground, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
       ),
     );
   }

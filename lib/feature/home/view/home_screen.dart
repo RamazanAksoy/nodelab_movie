@@ -1,5 +1,3 @@
-// HomeScreen with full-screen movie cards and vertical scroll
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -48,23 +46,26 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: colorScheme.background,
       body: SafeArea(
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state.status == HomeStatus.initial || state.status == HomeStatus.loading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator(color: colorScheme.primary));
             }
             return RefreshIndicator(
               onRefresh: _onRefresh,
+              color: colorScheme.primary,
               child: PageView.builder(
                 controller: _pageController,
                 scrollDirection: Axis.vertical,
                 itemCount: state.hasReachedMax ? state.movies.length : state.movies.length + 1,
                 itemBuilder: (context, index) {
                   if (index >= state.movies.length) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator(color: colorScheme.primary));
                   }
 
                   final movie = state.movies[index];
@@ -98,9 +99,15 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 4),
-      child: Stack(fit: StackFit.expand, children: [_buildBackgroundImage(), _buildGradientOverlay(), _buildBottomContent(context)]),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [_buildBackgroundImage(), _buildGradientOverlay(colorScheme), _buildBottomContent(context, colorScheme, textTheme)],
+      ),
     );
   }
 
@@ -115,27 +122,33 @@ class MovieCard extends StatelessWidget {
     );
   }
 
-  Widget _buildGradientOverlay() {
+  Widget _buildGradientOverlay(ColorScheme colorScheme) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
-          colors: [Colors.black.withOpacity(0.8), Colors.transparent],
+          colors: [colorScheme.background.withOpacity(0.8), colorScheme.background.withOpacity(0)],
         ),
       ),
     );
   }
 
-  Widget _buildBottomContent(BuildContext context) {
+  Widget _buildBottomContent(BuildContext context, ColorScheme colorScheme, TextTheme textTheme) {
     return Positioned(
       left: 16,
       right: 16,
       bottom: 30,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        children: [_buildMovieLogo(), const SizedBox(width: 12), _buildTitleAndDescription(), const SizedBox(width: 12), _buildFavoriteButton()],
+        children: [
+          _buildMovieLogo(),
+          const SizedBox(width: 12),
+          _buildTitleAndDescription(textTheme, colorScheme),
+          const SizedBox(width: 12),
+          _buildFavoriteButton(colorScheme),
+        ],
       ),
     );
   }
@@ -156,7 +169,7 @@ class MovieCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTitleAndDescription() {
+  Widget _buildTitleAndDescription(TextTheme textTheme, ColorScheme colorScheme) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,12 +177,12 @@ class MovieCard extends StatelessWidget {
         children: [
           Text(
             movie.title ?? "",
-            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+            style: textTheme.titleMedium?.copyWith(color: colorScheme.onBackground, fontWeight: FontWeight.bold, fontSize: 18),
           ),
           const SizedBox(height: 4),
           Text(
             movie.plot ?? "",
-            style: const TextStyle(color: Colors.white70, overflow: TextOverflow.ellipsis),
+            style: textTheme.bodyMedium?.copyWith(color: colorScheme.onBackground.withOpacity(0.7), overflow: TextOverflow.ellipsis),
             maxLines: 2,
           ),
         ],
@@ -177,18 +190,18 @@ class MovieCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFavoriteButton() {
+  Widget _buildFavoriteButton(ColorScheme colorScheme) {
     return Container(
       height: 9.h,
       width: 13.w,
       margin: EdgeInsets.only(bottom: 8.h),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.withOpacity(0.3), width: 1),
-        color: Colors.grey.withOpacity(0.1),
+        border: Border.all(color: colorScheme.onBackground.withOpacity(0.3), width: 1),
+        color: colorScheme.onBackground.withOpacity(0.1),
         borderRadius: BorderRadius.circular(100),
       ),
       child: IconButton(
-        icon: Icon((movie.isFavorite ?? false) ? Icons.favorite : Icons.favorite_border, color: Colors.white70),
+        icon: Icon((movie.isFavorite ?? false) ? Icons.favorite : Icons.favorite_border, color: colorScheme.onBackground.withOpacity(0.7)),
         onPressed: onFavoriteToggle,
       ),
     );

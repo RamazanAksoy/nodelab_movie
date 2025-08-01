@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => LoginBloc(),
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 6.w),
@@ -49,18 +49,18 @@ class LoginCard extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildWelcomeText(),
+            _buildWelcomeText(context),
             SizedBox(height: 1.h),
-            _buildDescriptionText(),
+            _buildDescriptionText(context),
             SizedBox(height: 4.h),
             _buildEmailField(context),
             SizedBox(height: 2.h),
             _buildPasswordField(context),
             SizedBox(height: 2.h),
-            _buildForgotPasswordText(),
+            _buildForgotPasswordText(context),
             SizedBox(height: 3.h),
             _buildLoginButtonOrLoading(context, state),
-            _buildErrorText(state),
+            _buildErrorText(context, state),
             SizedBox(height: 4.h),
             _buildSocialButtons(),
             SizedBox(height: 3.h),
@@ -71,18 +71,20 @@ class LoginCard extends StatelessWidget {
     );
   }
 
-  Widget _buildWelcomeText() {
+  Widget _buildWelcomeText(BuildContext context) {
     return Text(
       'login.welcome'.tr(),
-      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 21.sp),
+      style: Theme.of(
+        context,
+      ).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold, fontSize: 21.sp),
     );
   }
 
-  Widget _buildDescriptionText() {
+  Widget _buildDescriptionText(BuildContext context) {
     return Text(
       'login.description'.tr(),
       textAlign: TextAlign.center,
-      style: TextStyle(color: Colors.white70, fontSize: 16.sp),
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onBackground.withOpacity(0.7), fontSize: 16.sp),
     );
   }
 
@@ -102,38 +104,40 @@ class LoginCard extends StatelessWidget {
       icon: Icons.lock_outline,
       isObscure: isObscure,
       suffixIcon: IconButton(
-        icon: Icon(isObscure ? Icons.visibility_off : Icons.visibility, color: Colors.white70),
+        icon: Icon(isObscure ? Icons.visibility_off : Icons.visibility, color: Theme.of(context).iconTheme.color?.withOpacity(0.7)),
         onPressed: () => context.read<LoginBloc>().add(TogglePasswordVisibility()),
       ),
       onChanged: (value) => context.read<LoginBloc>().add(PasswordChanged(value)),
     );
   }
 
-  Widget _buildForgotPasswordText() {
+  Widget _buildForgotPasswordText(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
         'login.forgot_password'.tr(),
-        style: TextStyle(color: Colors.white, fontSize: 15.sp, decoration: TextDecoration.underline),
+        style: Theme.of(
+          context,
+        ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary, fontSize: 15.sp, decoration: TextDecoration.underline),
       ),
     );
   }
 
   Widget _buildLoginButtonOrLoading(BuildContext context, LoginState state) {
     if (state.status == LoginStatus.submitting) {
-      return const CircularProgressIndicator();
+      return CircularProgressIndicator(color: Theme.of(context).colorScheme.primary);
     } else {
       return CustomButton(onPressed: () => context.read<LoginBloc>().add(LoginSubmitted()), title: 'login.login_button'.tr());
     }
   }
 
-  Widget _buildErrorText(LoginState state) {
+  Widget _buildErrorText(BuildContext context, LoginState state) {
     if (state.status == LoginStatus.failure && state.error != null) {
       return Padding(
         padding: const EdgeInsets.only(top: 12),
         child: Text(
           state.error!,
-          style: TextStyle(color: Color(0xFFE50914), fontSize: 14.sp),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: 14.sp),
         ),
       );
     }
@@ -161,11 +165,11 @@ class LoginCard extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: 'login.no_account'.tr(),
-          style: TextStyle(color: Colors.white, fontSize: 15.sp),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary, fontSize: 15.sp),
           children: [
             TextSpan(
               text: " ${'login.register'.tr()}",
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold),
             ),
           ],
         ),

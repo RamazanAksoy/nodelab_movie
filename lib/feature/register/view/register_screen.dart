@@ -21,7 +21,7 @@ class RegisterScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => RegisterBloc(),
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 6.w),
@@ -38,19 +38,22 @@ class RegisterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return BlocBuilder<RegisterBloc, RegisterState>(
       builder: (context, state) {
         if (state.status == RegisterStatus.success) {
-          Future.microtask(() => _showSuccessDialog(context));
+          Future.microtask(() => _showSuccessDialog(context, colorScheme, textTheme));
         }
 
         return SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildWelcomeText(),
+              _buildWelcomeText(textTheme, colorScheme),
               SizedBox(height: 1.h),
-              _buildDescriptionText(),
+              _buildDescriptionText(textTheme, colorScheme),
               SizedBox(height: 4.h),
               _buildNameField(context),
               SizedBox(height: 2.h),
@@ -61,11 +64,11 @@ class RegisterCard extends StatelessWidget {
               _buildConfirmPasswordField(context, state.isPasswordObscure ?? false),
               SizedBox(height: 3.h),
               _buildSubmitButtonOrLoading(context, state),
-              _buildErrorText(state),
+              _buildErrorText(state, colorScheme),
               SizedBox(height: 4.h),
               _buildSocialButtons(),
               SizedBox(height: 3.h),
-              _buildLoginRedirectText(context),
+              _buildLoginRedirectText(context, textTheme, colorScheme),
             ],
           ),
         );
@@ -73,38 +76,38 @@ class RegisterCard extends StatelessWidget {
     );
   }
 
-  void _showSuccessDialog(BuildContext context) {
+  void _showSuccessDialog(BuildContext context, ColorScheme colorScheme, TextTheme textTheme) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: Colors.black,
-        title: Text('register.success_title'.tr(), style: const TextStyle(color: Colors.white)),
-        content: Text('register.success_content'.tr(), style: const TextStyle(color: Colors.white70)),
+        backgroundColor: colorScheme.background,
+        title: Text('register.success_title'.tr(), style: textTheme.titleLarge?.copyWith(color: colorScheme.onBackground)),
+        content: Text('register.success_content'.tr(), style: textTheme.bodyMedium?.copyWith(color: colorScheme.onBackground.withOpacity(0.7))),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               NavigationService.instance?.pushReplacementNamed(AppRoutes.login);
             },
-            child: Text('register.success_button'.tr(), style: const TextStyle(color: Colors.red)),
+            child: Text('register.success_button'.tr(), style: TextStyle(color: colorScheme.primary)),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildWelcomeText() {
+  Widget _buildWelcomeText(TextTheme textTheme, ColorScheme colorScheme) {
     return Text(
       'register.welcome'.tr(),
-      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 21.sp),
+      style: textTheme.titleLarge?.copyWith(color: colorScheme.onPrimary, fontWeight: FontWeight.bold, fontSize: 21.sp),
     );
   }
 
-  Widget _buildDescriptionText() {
+  Widget _buildDescriptionText(TextTheme textTheme, ColorScheme colorScheme) {
     return Text(
       'register.description'.tr(),
       textAlign: TextAlign.center,
-      style: TextStyle(color: Colors.white70, fontSize: 16.sp),
+      style: textTheme.bodyMedium?.copyWith(color: colorScheme.onBackground.withOpacity(0.7), fontSize: 16.sp),
     );
   }
 
@@ -130,7 +133,7 @@ class RegisterCard extends StatelessWidget {
       icon: Icons.lock_outline,
       isObscure: isObscure,
       suffixIcon: IconButton(
-        icon: Icon(isObscure ? Icons.visibility_off : Icons.visibility, color: Colors.white70),
+        icon: Icon(isObscure ? Icons.visibility_off : Icons.visibility, color: Theme.of(context).iconTheme.color?.withOpacity(0.7)),
         onPressed: () => context.read<RegisterBloc>().add(TogglePasswordVisibility()),
       ),
       onChanged: (value) => context.read<RegisterBloc>().add(PasswordChanged(value)),
@@ -148,16 +151,19 @@ class RegisterCard extends StatelessWidget {
 
   Widget _buildSubmitButtonOrLoading(BuildContext context, RegisterState state) {
     if (state.status == RegisterStatus.submitting) {
-      return const CircularProgressIndicator();
+      return CircularProgressIndicator(color: Theme.of(context).colorScheme.primary);
     }
     return CustomButton(onPressed: () => context.read<RegisterBloc>().add(RegisterSubmitted()), title: 'register.register_button'.tr());
   }
 
-  Widget _buildErrorText(RegisterState state) {
+  Widget _buildErrorText(RegisterState state, ColorScheme colorScheme) {
     if (state.status == RegisterStatus.failure && state.error != null) {
       return Padding(
         padding: const EdgeInsets.only(top: 12),
-        child: Text(state.error!, style: const TextStyle(color: Color(0xFFE50914), fontSize: 14)),
+        child: Text(
+          state.error!,
+          style: TextStyle(color: colorScheme.primary, fontSize: 14.sp),
+        ),
       );
     }
     return const SizedBox.shrink();
@@ -176,7 +182,7 @@ class RegisterCard extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginRedirectText(BuildContext context) {
+  Widget _buildLoginRedirectText(BuildContext context, TextTheme textTheme, ColorScheme colorScheme) {
     return GestureDetector(
       onTap: () {
         NavigationService.instance?.pushReplacementNamed(AppRoutes.login);
@@ -184,11 +190,11 @@ class RegisterCard extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: 'register.have_account'.tr(),
-          style: TextStyle(color: Colors.white, fontSize: 15.sp),
+          style: textTheme.bodyMedium?.copyWith(color: colorScheme.onPrimary, fontSize: 15.sp),
           children: [
             TextSpan(
               text: " ${'register.login'.tr()}",
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: textTheme.bodyMedium?.copyWith(color: colorScheme.onPrimary, fontWeight: FontWeight.bold),
             ),
           ],
         ),

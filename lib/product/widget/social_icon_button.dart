@@ -9,17 +9,19 @@ class SocialIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final onBackgroundColor = Theme.of(context).colorScheme.onBackground;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         height: 6.h,
         width: 6.h,
         decoration: BoxDecoration(
-          color: Colors.white10,
+          color: onBackgroundColor.withOpacity(0.1),
           shape: BoxShape.circle,
-          border: Border.all(color: Colors.white24),
+          border: Border.all(color: onBackgroundColor.withOpacity(0.24)),
         ),
-        child: Icon(icon, color: Colors.white, size: 2.5.h),
+        child: Icon(icon, color: onBackgroundColor, size: 2.5.h),
       ),
     );
   }

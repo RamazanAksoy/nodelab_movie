@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'core/constants/app/app_constants.dart';
@@ -13,17 +14,22 @@ import 'product/app/application_item.dart';
 import 'product/route/route.dart';
 import 'product/theme/app_theme.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DependencyInjection.init();
+
   final token = LocaleManager.instance.getStringValue(PreferencesTypes.token);
+  final langCode = LocaleManager.instance.getStringValue(PreferencesTypes.language);
 
   runApp(
     EasyLocalization(
       supportedLocales: LanguageManager.instance?.supportedLocales ?? [],
       path: ApplicationConstants.LANG_ASSET_PATH,
-      startLocale: LanguageManager.instance?.trLocale,
-      child: MyApp(isLoggedIn: token.isNotEmpty),
+      startLocale: langCode.isNotEmpty ? Locale(langCode) : LanguageManager.instance?.trLocale,
+      child: ChangeNotifierProvider(
+        create: (_) => ThemeService(), // TEMAYI PROVIDER İLE VERDİK
+        child: MyApp(isLoggedIn: token.isNotEmpty),
+      ),
     ),
   );
 }
@@ -48,7 +54,7 @@ class MyApp extends StatelessWidget {
           routes: AppRoutes.routes,
           theme: ThemeManager.createTheme(AppThemeLight()),
           darkTheme: ThemeManager.createTheme(AppThemeDark()),
-          themeMode: ThemeService().themeMode,
+          themeMode: Provider.of<ThemeService>(context).themeMode,
         );
       },
     );

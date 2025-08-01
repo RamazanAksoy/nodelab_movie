@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http_parser/http_parser.dart';
 import 'profile_event.dart';
 import 'profile_state.dart';
 import '../service/profile_service.dart';
@@ -25,7 +29,21 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   Future<void> _onUploadPhoto(UploadPhoto event, Emitter<ProfileState> emit) async {
-    await service.uploadPhoto(event.filePath);
+    // Dosya oluştur
+    final file = File(event.filePath);
+    final fileName = file.path.split('/').last;
+
+    // MultipartFile oluştur
+    final multipartFile = await MultipartFile.fromFile(
+      file.path,
+      filename: fileName,
+      contentType: MediaType("image", "png"), // Eğer "package:http_parser/http_parser.dart" eklenirse
+    );
+
+    // FormData hazırla
+    final formData = FormData.fromMap({'file': multipartFile});
+
+    await service.uploadPhoto(formData);
     add(FetchProfile()); // fotoğraf sonrası tekrar yükle
   }
 }

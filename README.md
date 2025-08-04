@@ -133,7 +133,7 @@ lib
 Bu projeyi çalıştırmak için aşağıdaki adımları takip edebilirsiniz:
 
 Depoyu Klonlama:<br>
-git clone https://github.com/RamazanAksoy/marti_case_ra.git
+git clone https://github.com/RamazanAksoy/nodelab_movie.git
 
 Gerekli Paketleri Yükleme: Projenin bağımlılıklarını yüklemek için aşağıdaki komutu çalıştırın<br>
 flutter pub get
